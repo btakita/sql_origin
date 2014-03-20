@@ -6,6 +6,14 @@ module SQLOrigin
     vendor
   )
 
+  def self.log_lines=(num)
+    @log_lines = num
+  end
+
+  def self.log_lines
+    @log_lines || 3
+  end
+
   # @return [Array<String>] The backtrace less library paths.
 
   def self.filtered_backtrace

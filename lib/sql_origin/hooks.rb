@@ -8,7 +8,7 @@ module SQLOrigin
           :name          => name,
           :connection_id => object_id,
           :binds         => binds,
-          :backtrace     => SQLOrigin.filtered_backtrace[0, 3]) { yield }
+          :backtrace     => SQLOrigin.filtered_backtrace.take(SQLOrigin.log_lines)) { yield }
     rescue Exception => e
       message = "#{e.class.name}: #{e.message}: #{sql}"
       @logger.debug message if @logger
