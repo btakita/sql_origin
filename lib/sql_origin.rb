@@ -16,13 +16,33 @@ module SQLOrigin
 
   # @return [Array<String>] The backtrace less library paths.
 
-  def self.filtered_backtrace
+  def self.filter?
+    @filter || true
+  end
+
+  def self.filter=(filter)
+    @filter = filter
+  end
+
+  def self.backtrace
+    if filter?
+      filtered_backtrace
+    else
+      unfiltered_backtrace
+    end
+  end
+
+  def self.unfiltered_backtrace
     caller.map do |line|
-      line.sub /^#{Regexp.escape Rails.root.to_s}\//, ''
-    end.select do |line|
+      line.sub(/^#{Regexp.escape Rails.root.to_s}\//, '')
+    end
+  end
+
+  def self.filtered_backtrace
+    unfiltered_backtrace.select do |line|
       !line.starts_with?("/") &&
-          !line.starts_with?("(") &&
-          LIBRARY_PATHS.none? { |path| line.starts_with?(path) }
+        !line.starts_with?("(") &&
+        LIBRARY_PATHS.none? { |path| line.starts_with?(path) }
     end
   end
 
