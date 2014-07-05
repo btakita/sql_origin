@@ -1,7 +1,7 @@
 module SQLOrigin
   # @private
   module LogHook
-    def log(sql, name = "SQL", binds = [])
+    def log(sql, name = "SQL", binds = [], wat = nil)
       @instrumenter.instrument(
           "sql.active_record",
           :sql           => sql,
