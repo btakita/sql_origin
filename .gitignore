@@ -42,6 +42,9 @@ pkg
 # For vim:
 #*.swp
 
+# For rubymine:
+#*.idea
+
 # For redcar:
 #.redcar
 
